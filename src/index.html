@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Competencies Scout</title>
+  </head>
+  <body>
+    <div class="app-layout" id="app">
+      <header class="app-header" role="banner">
+        <div class="page-header">
+          <h1 class="type-display-2 page-header__title">
+            <a href="#/dashboard" class="page-header__link">Competencies Scout</a>
+            <span class="page-header__sep" aria-hidden="true">|</span>
+            <span class="page-header__tab" id="page-title">Dashboard</span>
+          </h1>
+        </div>
+      </header>
+      <div class="app-body-row">
+        <nav class="app-nav" aria-label="Main navigation">
+          <a class="app-nav__link" href="#/dashboard" data-nav="dashboard">
+            <span class="app-nav__icon" data-lucide="layout-dashboard" aria-hidden="true"></span>
+            <span class="app-nav__label">Dashboard</span>
+          </a>
+          <a class="app-nav__link" href="#/people" data-nav="people">
+            <span class="app-nav__icon" data-lucide="users" aria-hidden="true"></span>
+            <span class="app-nav__label">People</span>
+          </a>
+          <a class="app-nav__link" href="#/competencies" data-nav="competencies">
+            <span class="app-nav__icon" data-lucide="clipboard-list" aria-hidden="true"></span>
+            <span class="app-nav__label">Competencies</span>
+          </a>
+          <a class="app-nav__link app-nav__link--bottom" href="#/design-system" data-nav="design-system">
+            <span class="app-nav__icon" data-lucide="palette" aria-hidden="true"></span>
+            <span class="app-nav__label">Design System</span>
+          </a>
+        </nav>
+        <div class="app-right">
+        <div class="app-grid__body app-grid--expandable" id="app-body">
+          <main class="app-grid__main" role="main">
+            <div id="main-content" class="page-content type-body">Loading…</div>
+          </main>
+        </div>
+        <div id="drawer-backdrop" class="drawer-backdrop" aria-hidden="true" hidden></div>
+        <aside id="drawer" class="drawer drawer--overlay" role="dialog" aria-label="Profile" aria-hidden="true" hidden>
+          <div id="drawer-content" class="drawer__content"></div>
+        </aside>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+.profile-details {
+  margin: var(--space-6) 0 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2) var(--space-6);
+  max-width: 32rem;
+}
+.profile-details dt {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+.profile-details dd {
+  margin: 0;
+}
+.person-link {
+  color: var(--color-accent-600);
+  text-decoration: none;
+}
+.person-link:hover {
+  text-decoration: underline;
+}
+
+.profile-competencies {
+  margin-top: var(--space-8);
+}
+.profile-competencies h3 {
+  margin: 0 0 var(--space-4);
+}
+.profile-competencies h4 {
+  margin: var(--space-6) 0 var(--space-2);
+}
+.profile-competencies h4:first-of-type {
+  margin-top: var(--space-4);
+}
+.profile-scores-table {
+  margin-bottom: var(--space-6);
+  max-width: 40rem;
+}
+
+/* Drawer profile: close button at top */
+.drawer-profile__header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--space-4);
+}
+.drawer-profile__close {
+  margin-left: auto;
+}

@@ -1,0 +1,109 @@
+/**
+ * Very slim left vertical nav. Icon above label; light gray; green accent for active.
+ * Icons from Lucide (data-lucide). Uses tokens only.
+ */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.app-header {
+  flex-shrink: 0;
+}
+
+.app-body-row {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.app-nav {
+  width: 4.5rem;
+  flex-shrink: 0;
+  background: var(--color-gray-100);
+  border-right: 1px solid var(--color-border);
+  padding: var(--space-3) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.app-nav__link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-1);
+  width: 100%;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.app-nav__link:hover {
+  color: var(--color-text);
+  background: var(--color-gray-200);
+}
+.app-nav__link.nav-current {
+  color: var(--color-nav-active);
+  background: var(--color-nav-active-bg);
+}
+.app-nav__link.nav-current::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: var(--space-1);
+  bottom: var(--space-1);
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  background: var(--color-nav-active);
+}
+
+.app-nav__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+.app-nav__icon svg,
+.app-nav__link > svg.app-nav__svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.app-nav__link.nav-current .app-nav__icon svg,
+.app-nav__link.nav-current > svg.app-nav__svg {
+  stroke: var(--color-nav-active);
+}
+
+.app-nav__label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-nav__link--bottom {
+  margin-top: auto;
+}
+
+.app-right {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+}

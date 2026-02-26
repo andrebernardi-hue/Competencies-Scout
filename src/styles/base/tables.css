@@ -1,0 +1,75 @@
+/**
+ * Table components: zebra rows, token-based. Use with type-table-header / type-table-cell.
+ */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface);
+}
+
+.data-table th,
+.data-table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.data-table th {
+  background: var(--color-gray-50);
+  white-space: nowrap;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: var(--color-gray-50);
+}
+
+.data-table tbody tr:hover {
+  background: var(--color-gray-100);
+}
+
+.data-table th[data-sortable] {
+  cursor: pointer;
+  user-select: none;
+}
+
+.data-table th[data-sortable]:hover {
+  color: var(--color-text);
+}
+
+/* Sort icon: up/down chevrons; active direction highlighted. Use inner span so th stays table-cell and columns align. */
+.data-table th[data-sortable] .th-sort-content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.sort-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+}
+.sort-icon__svg {
+  display: block;
+}
+.sort-icon__up,
+.sort-icon__down {
+  opacity: 0.4;
+  transition: opacity 0.15s ease;
+}
+th.sort-icon--asc .sort-icon {
+  color: var(--color-text);
+}
+th.sort-icon--asc .sort-icon__up {
+  opacity: 1;
+}
+th.sort-icon--asc .sort-icon__down {
+  opacity: 0.4;
+}
+th.sort-icon--desc .sort-icon {
+  color: var(--color-text);
+}
+th.sort-icon--desc .sort-icon__down {
+  opacity: 1;
+}
+th.sort-icon--desc .sort-icon__up {
+  opacity: 0.4;
+}

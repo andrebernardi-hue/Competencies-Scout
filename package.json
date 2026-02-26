@@ -1,0 +1,29 @@
+{
+  "name": "competencies-scout",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/addon-interactions": "^8.4.7",
+    "@storybook/addon-links": "^8.4.7",
+    "@storybook/blocks": "^8.4.7",
+    "@storybook/html": "^8.4.7",
+    "@storybook/html-vite": "^8.4.7",
+    "@storybook/test": "^8.4.7",
+    "storybook": "^8.4.7",
+    "vite": "^6.0.3"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.6",
+    "lucide": "^0.575.0",
+    "papaparse": "^5.4.1"
+  }
+}

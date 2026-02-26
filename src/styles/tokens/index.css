@@ -1,0 +1,7 @@
+/**
+ * Central design tokens. Import this in app and Storybook.
+ * Never hardcode colors, type, or spacing in components.
+ */
+@import './colors.css';
+@import './typography.css';
+@import './spacing.css';

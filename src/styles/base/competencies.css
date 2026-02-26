@@ -1,0 +1,50 @@
+/**
+ * Competencies page: grid of skill tables. 50% width per card, scroll inside each table.
+ */
+.competencies-page {
+  padding: var(--space-6);
+}
+
+.competencies-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+}
+
+.competencies-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.competencies-card__title {
+  margin: 0;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+/* Scrollable area: ~half viewport height so ~4 cards fit in viewport */
+.competencies-card__scroll {
+  overflow: auto;
+  max-height: 45vh;
+  flex: 1;
+  min-height: 0;
+}
+
+.competencies-table {
+  margin: 0;
+}
+
+.competencies-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--color-gray-50);
+  box-shadow: 0 1px 0 var(--color-border);
+}

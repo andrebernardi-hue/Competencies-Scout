@@ -1,0 +1,80 @@
+/**
+ * Design System page: sub-rail (second column) + content. Sub-rail is a strip connected to main nav.
+ */
+.design-system-layout {
+  display: flex;
+  min-height: 100%;
+  width: 100%;
+}
+
+/* Ensure main stretches so sub-rail is full height when on design system */
+.app-grid__main:has(.design-system-layout) {
+  display: flex;
+  flex-direction: column;
+}
+.app-grid__main:has(.design-system-layout) #main-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+.app-grid__main:has(.design-system-layout) #main-content .design-system-layout {
+  flex: 1;
+  min-height: 0;
+}
+
+.design-system-nav {
+  width: 12rem;
+  flex-shrink: 0;
+  background: var(--color-gray-100);
+  border-right: 1px solid var(--color-border);
+  padding: var(--space-4) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.design-system-nav__link {
+  display: block;
+  padding: var(--space-2) var(--space-4);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: var(--type-body-sm-size);
+  font-weight: 500;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.design-system-nav__link:hover {
+  color: var(--color-text);
+  background: var(--color-gray-200);
+}
+.design-system-nav__link--current {
+  color: var(--color-nav-active);
+  background: var(--color-nav-active-bg);
+  border-left: 3px solid var(--color-nav-active);
+  margin-left: 0;
+  padding-left: calc(var(--space-4) - 3px);
+}
+
+.design-system-content {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  background: var(--color-surface-subtle);
+}
+
+.design-system-section {
+  padding: var(--space-6);
+}
+
+.design-system-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.design-system-swatch {
+  width: 5rem;
+  height: 3rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}

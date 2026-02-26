@@ -1,0 +1,78 @@
+/**
+ * Full-width expandable grid. Desktop only; consumed by app layout.
+ * Header is now top-level (.app-header); .app-right contains only body + drawer.
+ */
+.app-right {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-areas: 'body';
+  min-height: 0;
+}
+.app-right .app-grid__body {
+  grid-area: body;
+  min-height: 0;
+}
+
+.app-grid__body {
+  min-height: 0;
+}
+
+.app-grid__main {
+  min-height: 0;
+  overflow: auto;
+  background: var(--color-surface-subtle);
+}
+
+/* Drawer as overlay: on top of content, no layout shift */
+.drawer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  transition: opacity 0.2s ease;
+}
+.drawer-backdrop[hidden] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.drawer--overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  min-width: 20rem;
+  max-width: 32rem;
+  z-index: 11;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border-left: 1px solid var(--color-border);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease;
+}
+.drawer--overlay[hidden] {
+  transform: translateX(100%);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.drawer__content {
+  flex: 1;
+  overflow: auto;
+  padding: var(--space-6);
+}
+
+/* Expandable grid areas: add rows/columns by extending grid-template-* in pages */
+.app-grid--expandable {
+  grid-auto-rows: minmax(0, auto);
+}
+
+.app-grid__panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
