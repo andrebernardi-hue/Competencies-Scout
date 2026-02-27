@@ -132,3 +132,123 @@ export function getCategories() {
 export function getSkillsInCategory(category) {
   return skillsByCategory.get(category) ?? [];
 }
+
+/**
+ * Spectrum report: one bar per competency (category › skill), value = average rank across roster.
+ * @param {{ allowedPersonIds?: Set<string> }} [options] - When set, only scores from these person ids are included.
+ * @returns {{ labels: string[], fullLabels: string[], values: number[], categoryBoundaries: number[], categoryIndices: number[], categoryNames: string[] }}
+ */
+export function getSpectrumData(options = {}) {
+  const { allowedPersonIds } = options;
+  const labels = [];
+  const fullLabels = [];
+  const values = [];
+  const categoryBoundaries = [];
+  const categoryIndices = [];
+  const categoryNames = [];
+  let index = 0;
+  for (let c = 0; c < categories.length; c++) {
+    const category = categories[c];
+    const skills = getSkillsInCategory(category);
+    if (skills.length) categoryNames.push(category);
+    for (const skill of skills) {
+      let personScores = getScoresForSkill(category, skill);
+      if (allowedPersonIds != null) {
+        personScores = personScores.filter((ps) => allowedPersonIds.has(ps.personId));
+      }
+      const sum = personScores.reduce((a, { score }) => a + score, 0);
+      const avg = personScores.length ? sum / personScores.length : 0;
+      labels.push(skill);
+      fullLabels.push(`${category} › ${skill}`);
+      values.push(Math.round(avg * 100) / 100);
+      categoryIndices.push(c);
+      index++;
+    }
+    if (c < categories.length - 1 && skills.length) {
+      categoryBoundaries.push(index - 0.5);
+    }
+  }
+  return { labels, fullLabels, values, categoryBoundaries, categoryIndices, categoryNames };
+}
+
+/**
+ * Top n competencies by average rank (highest first). Uses same filtering as getSpectrumData.
+ * @param {number} n
+ * @param {{ allowedPersonIds?: Set<string> }} [options]
+ * @returns {{ fullLabel: string, value: number }[]}
+ */
+export function getTopCompetencies(n, options = {}) {
+  const data = getSpectrumData(options);
+  const combined = data.labels.map((label, i) => ({
+    fullLabel: data.fullLabels[i],
+    value: data.values[i],
+  }));
+  return combined
+    .sort((a, b) => b.value - a.value)
+    .slice(0, n);
+}
+
+/**
+ * Bottom n competencies by average rank (lowest first). Uses same filtering as getSpectrumData.
+ * @param {number} n
+ * @param {{ allowedPersonIds?: Set<string> }} [options]
+ * @returns {{ fullLabel: string, value: number }[]}
+ */
+export function getBottomCompetencies(n, options = {}) {
+  const data = getSpectrumData(options);
+  const combined = data.labels.map((label, i) => ({
+    fullLabel: data.fullLabels[i],
+    value: data.values[i],
+  }));
+  return combined
+    .sort((a, b) => a.value - b.value)
+    .slice(0, n);
+}
+
+/**
+ * People with their overall average score (average of all competency scores). Only includes people in allowedPersonIds when set.
+ * @param {{ allowedPersonIds?: Set<string> }} [options]
+ * @returns {{ personId: string, average: number }[]}
+ */
+export function getPersonAverageScores(options = {}) {
+  const { allowedPersonIds } = options;
+  const personIds = allowedPersonIds != null
+    ? [...allowedPersonIds].filter((id) => scoresByPerson.has(id))
+    : [...scoresByPerson.keys()];
+  return personIds.map((personId) => {
+    const entries = scoresByPerson.get(personId) ?? [];
+    const sum = entries.reduce((a, e) => a + e.score, 0);
+    const average = entries.length ? Math.round((sum / entries.length) * 100) / 100 : 0;
+    return { personId, average };
+  });
+}
+
+/**
+ * Average rank per category (average of all competency scores in that category). For radar by role.
+ * @param {{ allowedPersonIds?: Set<string> }} [options]
+ * @returns {{ labels: string[], values: number[] }}
+ */
+export function getCategoryAverages(options = {}) {
+  const { allowedPersonIds } = options;
+  const labels = [];
+  const values = [];
+  for (const category of categories) {
+    const skills = getSkillsInCategory(category);
+    let sum = 0;
+    let count = 0;
+    for (const skill of skills) {
+      let personScores = getScoresForSkill(category, skill);
+      if (allowedPersonIds != null) {
+        personScores = personScores.filter((ps) => allowedPersonIds.has(ps.personId));
+      }
+      for (const { score } of personScores) {
+        sum += score;
+        count += 1;
+      }
+    }
+    const avg = count ? Math.round((sum / count) * 100) / 100 : 0;
+    labels.push(category);
+    values.push(avg);
+  }
+  return { labels, values };
+}

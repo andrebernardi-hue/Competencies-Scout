@@ -35,4 +35,6 @@
 }
 .page-content {
   padding: var(--space-6);
+  min-width: 0;
+  overflow-x: hidden;
 }

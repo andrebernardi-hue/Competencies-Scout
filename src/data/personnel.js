@@ -57,6 +57,16 @@ export function getPersonById(id) {
 }
 
 /**
+ * Person ids whose role is in the given list (e.g. ['Manager', 'Staff']).
+ * @param {string[]} roles - Role names to include
+ * @returns {Set<string>}
+ */
+export function getPersonIdsForRoles(roles) {
+  const set = new Set(roles);
+  return new Set(people.filter((p) => set.has((p.role || '').trim())).map((p) => p.id));
+}
+
+/**
  * Resolve person id (slug) from full name. For matching competencies and other CSVs by name.
  * @param {string} name - Full name as in CSV (e.g. "Teresa Ceballos")
  * @returns {string | undefined}

@@ -11,15 +11,19 @@
 .app-right .app-grid__body {
   grid-area: body;
   min-height: 0;
+  min-width: 0;
 }
 
 .app-grid__body {
   min-height: 0;
+  min-width: 0;
 }
 
 .app-grid__main {
   min-height: 0;
-  overflow: auto;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: var(--color-surface-subtle);
 }
 

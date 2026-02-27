@@ -7,6 +7,7 @@ import { render as renderPeopleList } from './views/people-list.js';
 import { render as renderCompetencies } from './views/competencies.js';
 import { render as renderPersonProfile } from './views/person-profile.js';
 import { render as renderDirectorProfile } from './views/director-profile.js';
+import { render as renderCompetencyInsights } from './views/competency-insights.js';
 import { render as renderDesignSystem } from './views/design-system.js';
 
 /**
@@ -58,6 +59,21 @@ export function init(targets) {
     }
   }
 
+  function openCompetencyDrawer(categorySlug, skillSlug) {
+    if (!document.body.dataset.drawerReturnHash) {
+      document.body.dataset.drawerReturnHash = '#/competencies';
+    }
+    renderCompetencyInsights(drawerContent, categorySlug, skillSlug);
+    if (drawer) {
+      drawer.removeAttribute('hidden');
+      drawer.setAttribute('aria-hidden', 'false');
+    }
+    if (backdrop) {
+      backdrop.removeAttribute('hidden');
+      backdrop.setAttribute('aria-hidden', 'false');
+    }
+  }
+
   function hideDrawer() {
     drawerContent.innerHTML = '';
     if (drawer) {
@@ -79,6 +95,13 @@ export function init(targets) {
       setNavCurrent('people');
       openDrawer(rest[0]);
       /* do not re-render main – overlay on top of current view */
+    } else if (path === 'competency' && rest.length >= 2) {
+      setNavCurrent('competencies');
+      if (!document.body.dataset.drawerReturnHash) {
+        document.body.dataset.drawerReturnHash = '#/competencies';
+      }
+      openCompetencyDrawer(rest[0], rest[1]);
+      /* do not re-render main – overlay on top of current view */
     } else {
       hideDrawer();
       if (path === 'director' && rest.length) {
@@ -90,9 +113,9 @@ export function init(targets) {
         setNavCurrent('people');
         renderPeopleList(mainContent);
       } else if (path === 'competencies') {
-        document.body.dataset.drawerReturnHash = '#/competencies';
+        document.body.dataset.drawerReturnHash = '#/competencies' + (rest.length ? '/' + rest[0] : '');
         setNavCurrent('competencies');
-        renderCompetencies(mainContent);
+        renderCompetencies(mainContent, rest[0] || null);
       } else if (path === 'design-system') {
         document.body.dataset.drawerReturnHash = '#/design-system' + (rest.length ? '/' + rest[0] : '');
         setNavCurrent('design-system');

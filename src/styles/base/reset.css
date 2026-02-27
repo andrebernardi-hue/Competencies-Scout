@@ -8,6 +8,7 @@
 html {
   -webkit-font-smoothing: antialiased;
   text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -17,6 +18,7 @@ body {
   line-height: var(--type-body-line);
   color: var(--color-text);
   background-color: var(--color-surface);
+  overflow-x: hidden;
 }
 
 img, svg {

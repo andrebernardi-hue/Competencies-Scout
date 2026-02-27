@@ -1,11 +1,16 @@
 /**
- * Competencies: one table per skill (category > skill). 50% width each, 2 columns.
+ * Competencies: one table per skill (category > skill). Grouped by category with a menu to switch.
  * Each table: Person, Rank, Role; sortable headers; scroll inside table container.
  */
 import { getCategories, getSkillsInCategory, getScoresForSkill } from '../data/competencies.js';
 import { getPersonById } from '../data/personnel.js';
+import { slugify } from '../lib/slug.js';
 
-export function render(container) {
+/**
+ * @param {HTMLElement} container
+ * @param {string | null} [selectedCategorySlug] - Slug of category to show, or null for first category / "All"
+ */
+export function render(container, selectedCategorySlug = null) {
   container.innerHTML = '';
   container.className = 'page-content competencies-page';
 
@@ -23,11 +28,58 @@ export function render(container) {
     return;
   }
 
+  const categoryMenu = document.createElement('nav');
+  categoryMenu.className = 'competencies-nav';
+  categoryMenu.setAttribute('aria-label', 'Competency categories');
+  const menuList = document.createElement('ul');
+  menuList.className = 'competencies-nav__list';
+
+  const showAll = selectedCategorySlug === 'all' || selectedCategorySlug === null;
+  const selectedCategory = categories.find((c) => slugify(c) === selectedCategorySlug) ?? (showAll ? null : categories[0]);
+
+  // "All" option
+  const allItem = document.createElement('li');
+  allItem.className = 'competencies-nav__item';
+  const allLink = document.createElement('a');
+  allLink.href = '#/competencies/all';
+  allLink.className = 'competencies-nav__link type-body';
+  allLink.textContent = 'All';
+  if (showAll) {
+    allLink.classList.add('competencies-nav__link--current');
+    allLink.setAttribute('aria-current', 'page');
+  }
+  allItem.appendChild(allLink);
+  menuList.appendChild(allItem);
+
+  for (const category of categories) {
+    const slug = slugify(category);
+    const item = document.createElement('li');
+    item.className = 'competencies-nav__item';
+    const link = document.createElement('a');
+    link.href = `#/competencies/${slug}`;
+    link.className = 'competencies-nav__link type-body';
+    link.textContent = category;
+    if (!showAll && category === selectedCategory) {
+      link.classList.add('competencies-nav__link--current');
+      link.setAttribute('aria-current', 'page');
+    }
+    item.appendChild(link);
+    menuList.appendChild(item);
+  }
+  categoryMenu.appendChild(menuList);
+  container.appendChild(categoryMenu);
+
+  const categoryHeading = document.createElement('h3');
+  categoryHeading.className = 'type-heading-3 competencies-page__category-title';
+  categoryHeading.textContent = showAll ? 'All categories' : selectedCategory;
+  container.appendChild(categoryHeading);
+
   const grid = document.createElement('div');
   grid.className = 'competencies-grid';
   container.appendChild(grid);
 
-  for (const category of categories) {
+  const categoriesToRender = showAll ? categories : [selectedCategory];
+  for (const category of categoriesToRender) {
     const skills = getSkillsInCategory(category);
     for (const skill of skills) {
       const card = createSkillCard(category, skill);
@@ -46,8 +98,12 @@ function createSkillCard(category, skill) {
   card.className = 'competencies-card';
   const heading = document.createElement('h3');
   heading.className = 'type-heading-4 competencies-card__title';
-  heading.textContent = skill;
-  heading.title = `${category} › ${skill}`;
+  const link = document.createElement('a');
+  link.href = `#/competency/${slugify(category)}/${slugify(skill)}`;
+  link.className = 'competencies-card__title-link';
+  link.textContent = skill;
+  link.title = `View insights for ${skill}`;
+  heading.appendChild(link);
   card.appendChild(heading);
 
   const scrollWrap = document.createElement('div');

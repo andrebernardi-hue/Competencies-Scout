@@ -46,3 +46,47 @@
 .drawer-profile__close {
   margin-left: auto;
 }
+
+/* Competency insights: description before stats */
+.competency-insights__description {
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-gray-100);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--color-nav-active);
+}
+.competency-insights__description-text {
+  margin: 0;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* Competency insights drawer */
+.competency-insights__section {
+  margin-top: var(--space-6);
+}
+.competency-insights__section h3 {
+  margin: 0 0 var(--space-3);
+}
+.competency-insights__stats {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+  font-size: var(--type-body-sm-size);
+}
+.competency-insights__stats dt {
+  color: var(--color-text-secondary);
+}
+.competency-insights__stats dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.competency-insights__chart {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
